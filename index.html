@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CBT SMP NEGERI 1 SUKASADA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      min-height: 100vh;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    .card {
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(15, 23, 42, 0.7);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+      background-color: rgba(15, 23, 42, 0.8);
+    }
+    .subject-card {
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .subject-card:hover {
+      transform: scale(1.03);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-pattern flex items-center justify-center p-4 md:p-8">
+  <div class="w-full max-w-3xl">
+    <div class="flex flex-col items-center mb-8 fade-in">
+      <div class="w-24 h-24 rounded-full bg-slate-800/50 flex items-center justify-center mb-4 overflow-hidden">
+  <img src="https://i.ibb.co.com/3YjdDh2N/logo-sekolah-FINAL.png" alt="Logo Sekolah" class="object-contain h-full" />
+</div>
+
+      <h1 class="text-3xl md:text-4xl font-bold text-center mb-2 bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">
+        SMP Negeri 1 Sukasada
+      </h1>
+      <p class="text-slate-300">Tahun Pelajaran 2024/2025</p>
+    </div>
+
+    <div class="card p-6 md:p-8 mb-6 fade-in">
+      <h2 class="text-2xl font-bold text-center mb-6 text-slate-100">
+        Ujian Sumatif Akhir Fase
+      </h2>
+
+      <div id="loginSection">
+        <div class="flex flex-col items-center">
+          <div class="relative w-full max-w-xs mb-6">
+            <input
+              type="text"
+              id="nisInput"
+              placeholder="Masukkan NIS Anda"
+              class="w-full px-4 py-3 rounded-lg bg-slate-800/40 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent placeholder-slate-400 text-slate-200"
+            />
+            <i class="fas fa-user-graduate absolute right-3 top-3 text-slate-400"></i>
+          </div>
+          <button
+            onclick="showLinks()"
+            class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-blue-500 rounded-full font-medium text-white hover:from-indigo-700 hover:to-blue-600 transition-all duration-300 flex items-center"
+          >
+            <i class="fas fa-sign-in-alt mr-2"></i> Masuk
+          </button>
+        </div>
+      </div>
+
+      <div id="studentName" class="text-center font-semibold text-xl mt-6"></div>
+      <div id="mapelLinks" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 mt-6"></div>
+      <div id="backButton" class="hidden text-center mt-6">
+        <button
+          onclick="resetPage()"
+          class="px-8 py-3 bg-gradient-to-r from-gray-600 to-gray-500 rounded-full font-medium text-white hover:from-gray-700 hover:to-gray-600 transition-all duration-300"
+        >
+          Kembali ke Menu Awal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const students = [
+      { nis: "123456", name: "Adi", kelas: "7" },
+      { nis: "234567", name: "Budi", kelas: "8" },
+      { nis: "345678", name: "Citra", kelas: "7" },
+      { nis: "112233", name: "Pujana", kelas: "9" },  
+      { nis: "456789", name: "Dewi", kelas: "8" },
+      { nis: "11299", name: "ARYA PUTU SEPARSA WIJAYA", kelas: "9" },
+      { nis: "11300", name: "GUSTI AYU INDAH HANDAYANI", kelas: "9" },
+      { nis: "11594", name: "GUSTI AYU KOMANG SINTIA SARI", kelas: "9" },
+      { nis: "11301", name: "GUSTI MADE DWI CAHYA PUTRI", kelas: "9" },
+      { nis: "11302", name: "I PUTU LOLYANA PUTRA", kelas: "9" },
+      { nis: "11303", name: "JANUARDO DELLASKY ARYADITYAS", kelas: "9" },
+      { nis: "11304", name: "KADEK ALIT PUTRAWAN", kelas: "9" },
+      { nis: "11305", name: "KADEK ARTA YASA", kelas: "9" },
+      { nis: "11306", name: "KADEK ARYA MERTA WIJAYA", kelas: "9" },
+      { nis: "11307", name: "KADEK DIMAS CANDRA DIPA", kelas: "9" },
+      { nis: "11308", name: "KADEK DINI SUWARI", kelas: "9" },
+      { nis: "11309", name: "KETUT ARI LESTARI", kelas: "9" },
+      { nis: "11310", name: "KETUT OKA ALITA SARI", kelas: "9" },
+      { nis: "11312", name: "KOMANG RIZKY WIRA ADI SAPUTRA", kelas: "9" },
+      { nis: "11313", name: "KOMANG WIRANTANA", kelas: "9" },
+      { nis: "11314", name: "LUH DEWI AMBARA WATI", kelas: "9" },
+      { nis: "11315", name: "LUH KAORRI WARDANI", kelas: "9" },
+      { nis: "11316", name: "LUH KRISNA YANTI", kelas: "9" },
+      { nis: "11317", name: "LUH PIKA WIDIA PUTRI", kelas: "9" },
+      { nis: "11318", name: "LUH PUTU SRI MAYANI", kelas: "9" },
+      { nis: "11319", name: "MADE ANGGA DWI PUTRA", kelas: "9" },
+      { nis: "11320", name: "MADE ANGGRENI ODELIA APRILIANI", kelas: "9" },
+      { nis: "11321", name: "MADE ARYA GUNA PRADIPTA", kelas: "9" },
+      { nis: "11322", name: "MADE VENDI DWI PRATAMA", kelas: "9" },
+      { nis: "11323", name: "NI KADEK SARISHA WIDNYANI", kelas: "9" },
+      { nis: "11324", name: "NI PUTU JYOTI WEDASTRI TRESNAYANI", kelas: "9" },
+      { nis: "11325", name: "PUTU KEVIN PRASTYA", kelas: "9" },
+      { nis: "11326", name: "PUTU MERLAN SATRIANI", kelas: "9" },
+      { nis: "11327", name: "PUTU NANTA WIRIATAMA", kelas: "9" },
+      { nis: "11328", name: "PUTU TIKA FLORINANDARI", kelas: "9" },
+      { nis: "11329", name: "WAYAN ASTRA DHARMA YASA", kelas: "9" },
+      { nis: "11330", name: "WAYAN YUDI PRATAMA", kelas: "9" },
+      { nis: "11331", name: "GEDE KRISNA DHANI PUTRA", kelas: "9" },
+      { nis: "11332", name: "KADEK AGUSTINO TIRTAYASA ASDIKA PUTRA", kelas: "9" },
+      { nis: "11333", name: "KADEK ALDI ARIAWAN", kelas: "9" },
+      { nis: "11334", name: "KADEK DARMA SURYA", kelas: "9" },
+      { nis: "11335", name: "KADEK DEA SETIAWATI", kelas: "9" },
+      { nis: "11336", name: "KADEK ELSA PUTRI ADNYANI", kelas: "9" },
+      { nis: "11337", name: "KADEK JORDI SAPUTRA", kelas: "9" },
+      { nis: "11338", name: "KADEK MERTA YENI", kelas: "9" },
+      { nis: "11339", name: "KADEK OGI PUTRA SENA", kelas: "9" },
+      { nis: "11340", name: "KETUT MELATI DEPIANI", kelas: "9" },
+      { nis: "11341", name: "KETUT VIVI RISMA PUTRI", kelas: "9" },
+      { nis: "11342", name: "KETUT WETA JULIANTO", kelas: "9" },
+      { nis: "11343", name: "KOMANG ARISKA DEWI", kelas: "9" },
+      { nis: "11344", name: "KOMANG ARYABA WAHYU PRAMANA", kelas: "9" },
+      { nis: "11345", name: "KOMANG EDITYA PRATAMA", kelas: "9" },
+      { nis: "11346", name: "KOMANG RENITA MAHARANI", kelas: "9" },
+      { nis: "11347", name: "KOMANG TORA PASTIKA", kelas: "9" },
+      { nis: "11348", name: "LUH MIRANDA REDESTHA ARDIANI", kelas: "9" },
+      { nis: "11349", name: "LUH PUTRIANINGSIH", kelas: "9" },
+      { nis: "11350", name: "LUH PUTU KERTIYASIH", kelas: "9" },
+      { nis: "11351", name: "LUH SUTARIANI", kelas: "9" },
+      { nis: "11352", name: "MADE BAYU PRASETYA WARDANA", kelas: "9" },
+      { nis: "11353", name: "MADE NITA NINGSIH", kelas: "9" },
+      { nis: "11354", name: "NENGAH SUKA PERDI PRATAMA", kelas: "9" },
+      { nis: "11355", name: "NI KOMANG NANDA PUTRI", kelas: "9" },
+      { nis: "11356", name: "NI LUH PUTU CANTIKA PUTRI", kelas: "9" },
+      { nis: "11357", name: "PUTU DEWI ARIANTINI", kelas: "9" },
+      { nis: "11358", name: "PUTU MARVIN ARYA PRATAMA", kelas: "9" },
+      { nis: "11359", name: "PUTU PUSPA DEWI", kelas: "9" },
+      { nis: "11360", name: "PUTU REHAN BUDEDINATA", kelas: "9" },
+      { nis: "11361", name: "PUTU SUTA ARTA ARYAWAN", kelas: "9" },
+      { nis: "11362", name: "PUTU TEGUH ARDYANATA", kelas: "9" },
+      { nis: "11363", name: "GEDE REZA EKA PERMANA", kelas: "9" },
+      { nis: "11364", name: "GEDE SENTANA SEPUTRA", kelas: "9" },
+      { nis: "11365", name: "GEDE SUARDIKA YASA", kelas: "9" },
+      { nis: "11366", name: "KADEK DWI ARYA CAHYADI", kelas: "9" },
+      { nis: "11367", name: "KADEK LINDA VEBRI LISTIANI", kelas: "9" },
+      { nis: "11369", name: "KADEK RAMA PRAMANA ADITYA", kelas: "9" },
+      { nis: "11370", name: "KADEK REZA PRADITA", kelas: "9" },
+      { nis: "11371", name: "KADEK SATRINI", kelas: "9" },
+      { nis: "11372", name: "KADEK YUDA ARIAWAN", kelas: "9" },
+      { nis: "11373", name: "KETUT PUTRINING", kelas: "9" },
+      { nis: "11374", name: "KOMANG BAHTERA SYANDANA", kelas: "9" },
+      { nis: "11375", name: "KOMANG BUNGA YASTINI", kelas: "9" },
+      { nis: "11376", name: "KOMANG LIANITA DESIANTI ARIKA PUTRI", kelas: "9" },
+      { nis: "11377", name: "KOMANG MILA WIDIANI", kelas: "9" },
+      { nis: "11378", name: "KOMANG PIO GEGEL PAGELO", kelas: "9" },
+      { nis: "11379", name: "KOMANG RIA AMELIA CAHYANI", kelas: "9" },
+      { nis: "11380", name: "KOMANG ROESTARY PUTRI", kelas: "9" },
+      { nis: "11381", name: "LUH JELITA PRISILIA", kelas: "9" },
+      { nis: "11382", name: "LUH RISNA JULIANTINI", kelas: "9" },
+      { nis: "11383", name: "MADE FAJAR HANDIKA PUTRA", kelas: "9" },
+      { nis: "11384", name: "MADE NOVITA DWI CIPTA PRIANI", kelas: "9" },
+      { nis: "11595", name: "NUR FADILLAH", kelas: "9" },
+      { nis: "11385", name: "PUTU ABY PRASETYA", kelas: "9" },
+      { nis: "11386", name: "PUTU AGUS PUTRAWAN", kelas: "9" },
+      { nis: "11387", name: "PUTU BUNGA SINTIANI", kelas: "9" },
+      { nis: "11388", name: "PUTU CANDRA SUMANJAYA", kelas: "9" },
+      { nis: "11389", name: "PUTU DEVIANI", kelas: "9" },
+      { nis: "11390", name: "PUTU DIAN RAHAYUNI", kelas: "9" },
+      { nis: "11391", name: "PUTU EKA SUKA ASTINI", kelas: "9" },
+      { nis: "11392", name: "PUTU GITA AYU DINDA PURNAMI", kelas: "9" },
+      { nis: "11393", name: "PUTU RIZKY BIMANTARA", kelas: "9" },
+      { nis: "11394", name: "PUTU SATRIAWAN WIRA PUTRA", kelas: "9" },
+      { nis: "11395", name: "GEDE ARDIAWAN", kelas: "9" },
+      { nis: "11396", name: "GEDE DEVA ADITYA PUTRA", kelas: "9" },
+      { nis: "11397", name: "GUSTI AYU PUTU PRADNYA WIDYA UTTAMI", kelas: "9" },
+      { nis: "11398", name: "GUSTI NGURAH MADE WEDA KUSUMA PUTRA", kelas: "9" },
+      { nis: "11399", name: "I GEDE AGUNG MAHAPUTRA KORI", kelas: "9" },
+      { nis: "11400", name: "I KOMANG ARGA", kelas: "9" },
+      { nis: "11401", name: "KADEK DIKA ARYANA", kelas: "9" },
+      { nis: "11402", name: "KADEK MERLIN SATRIANI", kelas: "9" },
+      { nis: "11403", name: "KADEK MERY CAHYANI", kelas: "9" },
+      { nis: "11404", name: "KADEK PEBRI PUTRAWAN", kelas: "9" },
+      { nis: "11405", name: "KADEK STEVEN ARVA PRAJA DIPUTRA", kelas: "9" },
+      { nis: "11406", name: "KADEK SUGIADA", kelas: "9" },
+      { nis: "11407", name: "KETUT JUNIANI", kelas: "9" },
+      { nis: "11408", name: "KETUT VERDA ADI PRADIFTA", kelas: "9" },
+      { nis: "11409", name: "KOMANG ADI HERIAWAN", kelas: "9" },
+      { nis: "11410", name: "KOMANG ANGGA KURNIAWAN SEPTIAN", kelas: "9" },
+      { nis: "11411", name: "KOMANG DESMIANI", kelas: "9" },
+      { nis: "11412", name: "KOMANG HERI TRIANA", kelas: "9" },
+      { nis: "11413", name: "KOMANG NADIA SUITRIANI PUTRI", kelas: "9" },
+      { nis: "11414", name: "KOMANG RAHISA PUJA GUTAMA", kelas: "9" },
+      { nis: "11415", name: "KOMANG SANI GIANI PUTRI", kelas: "9" },
+      { nis: "11416", name: "LUH PUTU PUTRISENI", kelas: "9" },
+      { nis: "11417", name: "NI KOMANG ANGGITA DAMAYANTI", kelas: "9" },
+      { nis: "11418", name: "PUTU AGUS ANGGARTIA WIDI SASTRA", kelas: "9" },
+      { nis: "11419", name: "PUTU ARISTYA SEPTIANA DEWI", kelas: "9" },
+      { nis: "11420", name: "PUTU AYU LITA", kelas: "9" },
+      { nis: "11421", name: "PUTU DICKY PRATAMA PUTRA", kelas: "9" },
+      { nis: "11422", name: "PUTU DIKA SATRIA MARDINATA", kelas: "9" },
+      { nis: "11423", name: "PUTU DIVA LESTARI", kelas: "9" },
+      { nis: "11424", name: "PUTU KLAUDIA REGINA PUTRI", kelas: "9" },
+      { nis: "11425", name: "PUTU METTA FIRSTYA", kelas: "9" },
+      { nis: "11426", name: "PUTU WIRYANTINI PUTRI", kelas: "9" },
+      { nis: "11427", name: "GEDE ADI SAPUTRA", kelas: "9" },
+      { nis: "11428", name: "GEDE ARDIANA", kelas: "9" },
+      { nis: "11429", name: "GEDE BAGAS PRAWATA", kelas: "9" },
+      { nis: "11430", name: "GEDE DIKA PUJANUARTHA", kelas: "9" },
+      { nis: "11431", name: "GEDE ELVINO KUSUMA NANDA", kelas: "9" },
+      { nis: "11432", name: "GEDE PUTRA SUDIAWAN", kelas: "9" },
+      { nis: "11433", name: "GUSTI NGURAH KOMANG INDRAWAN", kelas: "9" },
+      { nis: "11434", name: "I GEDE ARDIKI", kelas: "9" },
+      { nis: "11435", name: "KADEK ADI SUDANA", kelas: "9" },
+      { nis: "11436", name: "KADEK AYU NINGSIH", kelas: "9" },
+      { nis: "11437", name: "KADEK DUIK APRIANI", kelas: "9" },
+      { nis: "11438", name: "KADEK DWI MAHARANI PUTRI", kelas: "9" },
+      { nis: "11439", name: "KADEK OKTA REDITYANI", kelas: "9" },
+      { nis: "11440", name: "KADEK RIA AGUSTINI", kelas: "9" },
+      { nis: "11441", name: "KADEK RIKA JULIANI", kelas: "9" },
+      { nis: "11442", name: "KETUT DANIN MAHARDIKA PUTRA", kelas: "9" },
+      { nis: "11443", name: "KOMANG ARTA JAYA", kelas: "9" },
+      { nis: "11444", name: "KOMANG AYU ADI SUTRENI", kelas: "9" },
+      { nis: "11445", name: "KOMANG DENI TRI ARTHA", kelas: "9" },
+      { nis: "11446", name: "KOMANG EMI CAHYANI", kelas: "9" },
+      { nis: "11447", name: "KOMANG INDAH MARTENI", kelas: "9" },
+      { nis: "11448", name: "KOMANG MESI", kelas: "9" },
+      { nis: "11449", name: "KOMANG RENDITA", kelas: "9" },
+      { nis: "11450", name: "KOMANG WIARDANA", kelas: "9" },
+      { nis: "11451", name: "LUH PUTU RISTA KIRANA PUTRI", kelas: "9" },
+      { nis: "11452", name: "NI LUH EKA MANIK AGUSTINA", kelas: "9" },
+      { nis: "11453", name: "PUTU EKA SEPTA ANGGRENI", kelas: "9" },
+      { nis: "11454", name: "PUTU EKA WIJAYANTI", kelas: "9" },
+      { nis: "11455", name: "PUTU GITA JUNI ANTINI", kelas: "9" },
+      { nis: "11456", name: "PUTU OGIK PUSPA ARDANA", kelas: "9" },
+      { nis: "11457", name: "PUTU REVINA FITRIYANI", kelas: "9" },
+      { nis: "11458", name: "PUTU TATHA MAHARANI", kelas: "9" },
+      { nis: "11459", name: "PUTU WIDYA ARTHAYANI", kelas: "9" },
+      { nis: "11460", name: "GEDE DIKA SURYA DINATA", kelas: "9" },
+      { nis: "11461", name: "GEDE GILANG DAINOVA PRATAMA", kelas: "9" },
+      { nis: "11462", name: "GUSTI NGURAH EKA MANIK PUTRAWAN", kelas: "9" },
+      { nis: "11463", name: "GUSTI PUTU PUTRA SEMADI", kelas: "9" },
+      { nis: "11464", name: "I GUSTI MADE CHANDRA DWI KUSUMA", kelas: "9" },
+      { nis: "11465", name: "I GUSTI NGURAH AGUNG ARI WIGUNA WIBAWA", kelas: "9" },
+      { nis: "11466", name: "I GUSTI NGURAH AGUNG PANJI CAKRA INDRA PRASTA", kelas: "9" },
+      { nis: "11467", name: "I GUSTI NGURAH AGUNG RADITYA YUDHA PRATAMA", kelas: "9" },
+      { nis: "11468", name: "I KADEK MANIK PUTRAWAN", kelas: "9" },
+      { nis: "11469", name: "I LUH ANGELINA DEWI", kelas: "9" },
+      { nis: "11470", name: "KADEK BELA LISTIA DEWI", kelas: "9" },
+      { nis: "11471", name: "KADEK DARMINI", kelas: "9" },
+      { nis: "11472", name: "KADEK DWI ANGGUN RISPATINI PUTRI", kelas: "9" },
+      { nis: "11473", name: "KADEK MARIANI", kelas: "9" },
+      { nis: "11474", name: "KADEK SILVA ADELIA", kelas: "9" },
+      { nis: "11475", name: "KADEK SUKRENI FRIDAYANTI", kelas: "9" },
+      { nis: "11476", name: "KADEK WIRA ADI JAYA", kelas: "9" },
+      { nis: "11477", name: "KETUT SEPTRIANA PRADIVA", kelas: "9" },
+      { nis: "11479", name: "KOMANG AYU MEYLIKA PUTRI", kelas: "9" },
+      { nis: "11480", name: "KOMANG FIKA RIYANTI", kelas: "9" },
+      { nis: "11481", name: "KOMANG HARIL SANOVI", kelas: "9" },
+      { nis: "11482", name: "KOMANG JULI PANDU WINATA", kelas: "9" },
+      { nis: "11483", name: "KOMANG KERTIASIH", kelas: "9" },
+      { nis: "11484", name: "KOMANG NITASIA ARINDA DEWI", kelas: "9" },
+      { nis: "11485", name: "LUH WINDA LIA ARDININGSIH", kelas: "9" },
+      { nis: "11486", name: "MADE GEDE PUTRAYASA", kelas: "9" },
+      { nis: "11487", name: "MADE LAKSAMANA PUTRA PANDE", kelas: "9" },
+      { nis: "11488", name: "PUTU CELIA RISTIANINGSIH", kelas: "9" },
+      { nis: "11489", name: "PUTU INDAH SEPTIANI", kelas: "9" },
+      { nis: "11490", name: "PUTU MITA RESTIANI", kelas: "9" },
+      { nis: "11491", name: "PUTU SITA DEWI", kelas: "9" },
+      { nis: "11492", name: "WAYAN SATWIKA DHARMA", kelas: "9" },
+      { nis: "11493", name: "AYU MADE LESTARI", kelas: "9" },
+      { nis: "11495", name: "I GEDE DIKA SAPUTRA WIBAWA", kelas: "9" },
+      { nis: "11496", name: "I GUSTI MADE LUCKY ADI KURNIAWAN", kelas: "9" },
+      { nis: "11497", name: "I KADEK DIKA PRASETIA", kelas: "9" },
+      { nis: "11498", name: "I MADE ANANDA MAHA DIVA", kelas: "9" },
+      { nis: "11499", name: "I MADE PUTRA ADITYA", kelas: "9" },
+      { nis: "11501", name: "KADEK ANDI SASTRAWAN", kelas: "9" },
+      { nis: "11502", name: "KADEK DWI HERAWATI", kelas: "9" },
+      { nis: "11503", name: "KADEK OKTA SRI WAHYUNI", kelas: "9" },
+      { nis: "11504", name: "KADEK PADMAYANTI", kelas: "9" },
+      { nis: "11505", name: "KADEK SINDY PURNAMA DEWI", kelas: "9" },
+      { nis: "11506", name: "KADEK SULISTIA WULANDARI", kelas: "9" },
+      { nis: "11507", name: "KADEK VALENTINA YANTI", kelas: "9" },
+      { nis: "11508", name: "KADEK WULAN SURYANI", kelas: "9" },
+      { nis: "11509", name: "KETUT ALFIAN RADITYA", kelas: "9" },
+      { nis: "11510", name: "KOMANG BENO SAPUTRA JAYA", kelas: "9" },
+      { nis: "11511", name: "KOMANG DINDA APRILIA", kelas: "9" },
+      { nis: "11512", name: "KOMANG KRISNA DWIPAYANA", kelas: "9" },
+      { nis: "11513", name: "KOMANG MAWAR SELPIANI", kelas: "9" },
+      { nis: "11514", name: "KOMANG MIA MERIATI", kelas: "9" },
+      { nis: "11515", name: "KOMANG NOVA DARMA YUDHA SANTOSA", kelas: "9" },
+      { nis: "11516", name: "KOMANG PUTRI AGUSTINI", kelas: "9" },
+      { nis: "11517", name: "KOMANG WISANA", kelas: "9" },
+      { nis: "11518", name: "KOMANG YULIANINGSIH", kelas: "9" },
+      { nis: "11519", name: "NGURAH MADE SUASTIKA", kelas: "9" },
+      { nis: "11520", name: "NI LUH PUTU DEA SETYARINI", kelas: "9" },
+      { nis: "11521", name: "NYOMAN RISKY SATYA MANDALA", kelas: "9" },
+      { nis: "11522", name: "PUTU MADE SERI DEVI ULANDARI", kelas: "9" },
+      { nis: "11523", name: "PUTU MAHAYANI MEISYA PUTRI", kelas: "9" },
+      { nis: "11524", name: "PUTU SRI DHARMIASIH", kelas: "9" },
+      { nis: "11525", name: "PUTU SUPUTRA ARYA LAKSANA", kelas: "9" },
+      { nis: "11526", name: "GEDE SANDI SAPUTRA", kelas: "9" },
+      { nis: "11527", name: "I KOMANG WINANGUN PUTRA", kelas: "9" },
+      { nis: "11528", name: "I WAYAN TEGUH WIANTARA", kelas: "9" },
+      { nis: "11529", name: "IDA AYU KETUT KAPAT CITRA ADNYANI", kelas: "9" },
+      { nis: "11530", name: "KADEK ADI MERTADINATA", kelas: "9" },
+      { nis: "11531", name: "KADEK AGUS REDI ANTARA", kelas: "9" },
+      { nis: "11532", name: "KADEK ARDI SUARTANA", kelas: "9" },
+      { nis: "11533", name: "KADEK DIKA JULIA WARDANA", kelas: "9" },
+      { nis: "11534", name: "KADEK JUNI ANTARI", kelas: "9" },
+      { nis: "11535", name: "KADEK RANI SRI DEWI", kelas: "9" },
+      { nis: "11536", name: "KADEK WAHYU PUTRA", kelas: "9" },
+      { nis: "11537", name: "KADEK WIDYANI", kelas: "9" },
+      { nis: "11538", name: "KETUT HENDRIKSA", kelas: "9" },
+      { nis: "11539", name: "KETUT PURNAMI", kelas: "9" },
+      { nis: "11540", name: "KETUT RISKI ADITIA", kelas: "9" },
+      { nis: "11541", name: "KOMANG DEBI TRI MARTINI", kelas: "9" },
+      { nis: "11542", name: "KOMANG EVI", kelas: "9" },
+      { nis: "11543", name: "KOMANG MARTA ADI PUTRA", kelas: "9" },
+      { nis: "11544", name: "KOMANG SENI MEIRANTINI", kelas: "9" },
+      { nis: "11545", name: "KOMANG VINA INDAH CAHYANI", kelas: "9" },
+      { nis: "11546", name: "KOMANG YUNA NATAYA DWINOV", kelas: "9" },
+      { nis: "11547", name: "LUH MERRY ANDANI PUTRI", kelas: "9" },
+      { nis: "11549", name: "MADE ADI PRAYOGA", kelas: "9" },
+      { nis: "11550", name: "NGURAH PUTU ARIYA KRISNA", kelas: "9" },
+      { nis: "11551", name: "NI MADE DWI PUTRI PRATIWI", kelas: "9" },
+      { nis: "11552", name: "PUTU ACA SEPRIYANI", kelas: "9" },
+      { nis: "11553", name: "PUTU ADITYA EKA PRATAMA", kelas: "9" },
+      { nis: "11554", name: "PUTU ARYA ADITYA PRATAMA", kelas: "9" },
+      { nis: "11555", name: "PUTU EKA PRADITA", kelas: "9" },
+      { nis: "11556", name: "PUTU MILAWATI CELSYANI", kelas: "9" },
+      { nis: "11557", name: "PUTU PUTRI JUNI ARDANI", kelas: "9" },
+      { nis: "11558", name: "PUTU TIRTA ADNYANA", kelas: "9" },
+      { nis: "11559", name: "GEDE ANGGA LANANG WANGI", kelas: "9" },
+      { nis: "11560", name: "GEDE BUDA ARTA", kelas: "9" },
+      { nis: "11561", name: "GUSTI AYU KETUT PUTRI PRANINGSIH", kelas: "9" },
+      { nis: "11562", name: "GUSTI AYU MD SILVANI ARUNA PURNAMA", kelas: "9" },
+      { nis: "11563", name: "I MADE AGUS DARMA WIJAYA", kelas: "9" },
+      { nis: "11564", name: "KADEK AGUS PUTRA ARTAWAN", kelas: "9" },
+      { nis: "11565", name: "KADEK ANAN DIATMIKA", kelas: "9" },
+      { nis: "11566", name: "KADEK ANANDA ARYA PUTRA", kelas: "9" },
+      { nis: "11567", name: "KADEK DIANTARI", kelas: "9" },
+      { nis: "11569", name: "KADEK NEHRU SETIAWAN", kelas: "9" },
+      { nis: "11570", name: "KADEK PUTRI LESTARI", kelas: "9" },
+      { nis: "11571", name: "KADEK RISMA AGUSTINI", kelas: "9" },
+      { nis: "11572", name: "KADEK SATHYA ARYA UDAYANA", kelas: "9" },
+      { nis: "11573", name: "KADEK SATRIANI CAHAYA PUTRI", kelas: "9" },
+      { nis: "11574", name: "KADEK YULI LESTARIANI", kelas: "9" },
+      { nis: "11575", name: "KETUT RENDI PRASETIA", kelas: "9" },
+      { nis: "11576", name: "KOMANG CIKA ANGGREANI DEWI", kelas: "9" },
+      { nis: "11577", name: "KOMANG RUVINI TRI ASCARYA", kelas: "9" },
+      { nis: "11578", name: "KOMANG SENANDA PRADITA", kelas: "9" },
+      { nis: "11579", name: "KOMANG SRI YULIANTINI", kelas: "9" },
+      { nis: "11580", name: "KOMANG SURYA ARI WIGUNA", kelas: "9" },
+      { nis: "11581", name: "KOMANG WIDI LESTARI", kelas: "9" },
+      { nis: "11582", name: "LUH GEDE SINTYA JUNIA PUTRI", kelas: "9" },
+      { nis: "11583", name: "LUH NESIA", kelas: "9" },
+      { nis: "11584", name: "LUH TISNA APRILIA", kelas: "9" },
+      { nis: "11585", name: "MADE SUKA EDI", kelas: "9" },
+      { nis: "11586", name: "PANDE KOMANG ADI WIRADANA", kelas: "9" },
+      { nis: "11587", name: "PUTU DESI ARISKA PUTRI", kelas: "9" },
+      { nis: "11588", name: "PUTU DEVI ARIANI", kelas: "9" },
+      { nis: "11589", name: "PUTU EKA KUSUMA JAYA", kelas: "9" },
+      { nis: "11590", name: "PUTU HENDRIC DAVID PURNAWAN", kelas: "9" },
+      { nis: "11591", name: "PUTU KESYA JENI UTAMI", kelas: "9" },
+      { nis: "11592", name: "PUTU VANIA PRISCILIA", kelas: "9" }
+
+    ];
+
+    const subjects = [
+      { name: "TRY OUT PAKET 1", icon: "fa-book-open", color: "from-blue-600 to-cyan-600", link7: "https://forms.gle/link-bindo-7", link8: "https://forms.gle/link-bindo-8", link9: "https://forms.gle/JWxGMLb97LG3fPtB7"},
+      { name: "TRY OUT PAKET 2", icon: "fa-book-open", color: "from-teal-600 to-cyan-600", link7: "https://forms.gle/link-bindo-7", link8: "https://forms.gle/link-bindo-8", link9: "https://forms.gle/bwTq5zJKzCTYBwMw5"},
+      { name: "TRY OUT PAKET 3", icon: "fa-book-open", color: "from-lime-600 to-green-500", link7: "https://forms.gle/link-bindo-7", link8: "https://forms.gle/link-bindo-8", link9: "https://forms.gle/5tAL2BWdVNdwPctr8"}
+    ];
+
+    function showLinks() {
+      const nis = document.getElementById("nisInput").value.trim();
+      const siswa = students.find((s) => s.nis === nis);
+
+      if (!siswa) {
+        alert("NIS tidak ditemukan!");
+        return;
+      }
+
+      document.getElementById("studentName").textContent = `Halo, ${siswa.name}`;
+
+      // Sembunyikan form NIS
+      document.getElementById("loginSection").style.display = 'none';
+
+      // Tampilkan tombol kembali
+      document.getElementById("backButton").classList.remove("hidden");
+
+      const container = document.getElementById("mapelLinks");
+      container.innerHTML = "";
+
+      subjects.forEach((subject) => {
+        const link = subject[`link${siswa.kelas}`];
+        const el = document.createElement("a");
+        el.href = link;
+        el.target = "_blank";
+        el.className = `subject-card bg-gradient-to-br ${subject.color} p-4 rounded-xl text-white flex items-center space-x-4`;
+        el.innerHTML = `<i class="fas ${subject.icon} text-xl"></i><span class="font-semibold">${subject.name}</span>`;
+        container.appendChild(el);
+      });
+
+      container.classList.remove("hidden");
+    }
+
+    function resetPage() {
+      // Menampilkan kembali form input NIS dan menyembunyikan links mata pelajaran
+      document.getElementById("loginSection").style.display = 'block';
+      document.getElementById("studentName").textContent = '';
+      document.getElementById("mapelLinks").classList.add("hidden");
+
+      // Sembunyikan tombol kembali
+      document.getElementById("backButton").classList.add("hidden");
+
+      // Mengosongkan input NIS
+      document.getElementById("nisInput").value = '';
+    }
+  </script>
+</body>
+</html>
